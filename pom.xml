@@ -6,7 +6,12 @@
 
     <groupId>com.chavrusa</groupId>
     <artifactId>im</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>./server</module>
+        <module>./bootstrap</module>
+    </modules>
     <properties>
         <logback.verison>1.1.7</logback.verison>
         <junit.version>4.12</junit.version>

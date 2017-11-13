@@ -45,13 +45,13 @@
     <!-- 特定过滤含有某字符串的日志 -->
     <appender name="file-str"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+        <!--<filter class="ch.qos.logback.core.filter.EvaluatorFilter">
             <evaluator>
                 <expression>message.contains("str")</expression>
             </evaluator>
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
-        </filter>
+        </filter>-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <FileNamePattern>D:/logs/contains.%d{yyyy-MM-dd}.log
             </FileNamePattern>
