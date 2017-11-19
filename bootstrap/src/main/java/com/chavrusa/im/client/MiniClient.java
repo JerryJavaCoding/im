@@ -44,8 +44,7 @@ public class MiniClient {
                             socketChannel.pipeline().addLast().addLast(protocalDecoder, protocalEncoder, clientHandler);
                         }
                     });
-            // 服务器异步创建绑定
-            ChannelFuture channelFuture = bootstrap.connect(host,PORT);
+            ChannelFuture channelFuture = bootstrap.connect(host,PORT).sync();
             logger.info(" connect to Server on {}", channelFuture.channel().localAddress());
             channelFuture.channel().closeFuture().sync();
         } catch (InterruptedException e) {

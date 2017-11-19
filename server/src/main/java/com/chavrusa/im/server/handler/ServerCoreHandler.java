@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- *
  * @author Jerry
  * @date 2017/11/12 0012
  * 核心算法处理类
@@ -22,22 +21,40 @@ public class ServerCoreHandler extends ChannelInboundHandlerAdapter {
     private static Logger logger = LoggerFactory.getLogger(ServerCoreHandler.class);
 
     private MessageEventListener messageEventListener = null;
-    private LogicProcessor logicProcessor;
+    private LogicProcessor logicProcessor=new LogicProcessor();
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        Protocal byteBuf= (Protocal)msg;
-        logger.info("server channelRead...; received:" + byteBuf.toString());
-        ctx.writeAndFlush(msg);
+        Protocal protocal = (Protocal) msg;
+        if (protocal == null) {
+            logger.error("请求类型不明确,[{}]",protocal.toString());
+            return;
+        }
+        logger.info("server channelRead...; received:" + protocal.toString());
+        switch (protocal.getType()) {
+            case 0:
+                logger.info("登录请求");
+                logicProcessor.processorLogin(ctx,protocal);
+                break;
+            case 1:
+                logicProcessor.processKeepAlive(ctx,protocal);
+                logger.info("心跳包请求");
+                break;
+            case 2:
+                logger.info("通信请求");
+                break;
+            case 3:break;
+            case 4:break;
+            default:
+                logger.error("请求类型未定义,[{}]",protocal.toString());
+        }
+
     }
 
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
         logger.info("server channelReadComplete..");
-        // 第一种方法：写一个空的buf，并刷新写出区域。完成后关闭sock channel连接。
-//        ctx.writeAndFlush(Unpooled.EMPTY_BUFFER).addListener(ChannelFutureListener.CLOSE);
-        //ctx.flush(); // 第二种方法：在client端关闭channel连接，这样的话，会触发两次channelReadComplete方法。
-        //ctx.flush().close().sync(); // 第三种：改成这种写法也可以，但是这中写法，没有第一种方法的好。
+
     }
 
     @Override
@@ -45,9 +62,6 @@ public class ServerCoreHandler extends ChannelInboundHandlerAdapter {
         logger.info("server occur exception:" + cause.getMessage());
         cause.printStackTrace();
         ctx.close(); // 关闭发生异常的连接
-    }
-
-    public void messageReceived() {
     }
 
     public void createLogicProcessor() {
@@ -60,5 +74,17 @@ public class ServerCoreHandler extends ChannelInboundHandlerAdapter {
     }
 
     public void sessionClosed() {
+    }
+
+    public void setLogicProcessor(LogicProcessor logicProcessor) {
+        this.logicProcessor = logicProcessor;
+    }
+
+    public MessageEventListener getMessageEventListener() {
+        return messageEventListener;
+    }
+
+    public void setMessageEventListener(MessageEventListener messageEventListener) {
+        this.messageEventListener = messageEventListener;
     }
 }

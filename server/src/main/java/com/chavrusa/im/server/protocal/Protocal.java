@@ -5,16 +5,16 @@ package com.chavrusa.im.server.protocal;
  * @date 2017/11/12 0012
  */
 public class Protocal {
-    private int type;
+    private Integer type;
     private String fromHost;
     private String toHost;
     private String dataContent;
 
-    public int getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
@@ -40,5 +40,12 @@ public class Protocal {
 
     public void setDataContent(String dataContent) {
         this.dataContent = dataContent;
+    }
+
+    @Override
+    public String toString() {
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("[from:").append(fromHost).append(",to:").append(toHost).append(",type:").append(type).append(",dataContent:").append(dataContent);
+        return stringBuffer.toString();
     }
 }
