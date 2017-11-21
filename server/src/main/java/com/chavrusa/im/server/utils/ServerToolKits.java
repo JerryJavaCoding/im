@@ -16,7 +16,7 @@ public class ServerToolKits {
      */
     public static <T> T parseToObj(ByteBuf byteBuf, Class<T> clazz) {
         int length=byteBuf.readableBytes();
-        byte[] bytes=new byte[1024];
+        byte[] bytes=new byte[length];
         byteBuf.getBytes(byteBuf.readerIndex(),bytes);
         String tran=new String(bytes,0,length);
         return JSON.parseObject(tran, clazz);

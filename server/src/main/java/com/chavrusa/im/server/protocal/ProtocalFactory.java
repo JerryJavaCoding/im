@@ -35,6 +35,9 @@ public class ProtocalFactory {
         protocal.setDataContent("login success");
         return protocal;
     }
+    public static Builder builder(){
+        return new Builder();
+    }
     public static class Builder {
         Protocal protocal = new Protocal();
 

@@ -42,6 +42,7 @@ public class ServerCoreHandler extends ChannelInboundHandlerAdapter {
                 break;
             case 2:
                 logger.info("通信请求");
+                logicProcessor.processorC2SMessage(ctx,protocal);
                 break;
             case 3:break;
             case 4:break;

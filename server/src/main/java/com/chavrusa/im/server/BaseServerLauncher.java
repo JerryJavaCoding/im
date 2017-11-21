@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
 public abstract class BaseServerLauncher {
     private static Logger logger = LoggerFactory.getLogger(BaseServerLauncher.class);
     private ServerCoreHandler serverCoreHandler = new ServerCoreHandler();
-    private ProtocalDecoder protocalDecoder = new ProtocalDecoder();
     private ProtocalEncoder protocalEncoder = new ProtocalEncoder();
     public static int PORT = 7015;
     public static String appkey = null;
@@ -43,6 +42,7 @@ public abstract class BaseServerLauncher {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             logger.info("connected...; Client:{}", socketChannel.remoteAddress());
+                            ProtocalDecoder protocalDecoder = new ProtocalDecoder();
                             socketChannel.pipeline().addLast().addLast(protocalDecoder, protocalEncoder, serverCoreHandler);
                         }
                     });
