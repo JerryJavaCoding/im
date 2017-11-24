@@ -1,7 +1,7 @@
 package com.chavrusa.im.server.handler;
 
 
-import com.chavrusa.im.server.event.MessageEventListener;
+import com.chavrusa.im.server.event.IMessageEventListener;
 import com.chavrusa.im.server.processor.LogicProcessor;
 import com.chavrusa.im.server.protocal.Protocal;
 import io.netty.channel.ChannelHandler;
@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 public class ServerCoreHandler extends ChannelInboundHandlerAdapter {
     private static Logger logger = LoggerFactory.getLogger(ServerCoreHandler.class);
 
-    private MessageEventListener messageEventListener = null;
+    private IMessageEventListener messageEventListener = null;
     private LogicProcessor logicProcessor=new LogicProcessor();
 
     @Override
@@ -33,16 +33,16 @@ public class ServerCoreHandler extends ChannelInboundHandlerAdapter {
         logger.info("server channelRead...; received:" + protocal.toString());
         switch (protocal.getType()) {
             case 0:
-                logger.info("登录请求");
-                logicProcessor.processorLogin(ctx,protocal);
+                logger.info("-------------登录请求-------------");
+                logicProcessor.processorLogin(ctx,protocal,messageEventListener);
                 break;
             case 1:
-                logicProcessor.processKeepAlive(ctx,protocal);
-                logger.info("心跳包请求");
+                logicProcessor.processKeepAlive(ctx,protocal,messageEventListener);
+                logger.info("-------------心跳包请求-------------");
                 break;
             case 2:
-                logger.info("通信请求");
-                logicProcessor.processorC2SMessage(ctx,protocal);
+                logger.info("-------------c2s通信请求-------------");
+                logicProcessor.processorC2SMessage(ctx,protocal,messageEventListener);
                 break;
             case 3:break;
             case 4:break;
@@ -81,11 +81,11 @@ public class ServerCoreHandler extends ChannelInboundHandlerAdapter {
         this.logicProcessor = logicProcessor;
     }
 
-    public MessageEventListener getMessageEventListener() {
+    public IMessageEventListener getMessageEventListener() {
         return messageEventListener;
     }
 
-    public void setMessageEventListener(MessageEventListener messageEventListener) {
+    public void setMessageEventListener(IMessageEventListener messageEventListener) {
         this.messageEventListener = messageEventListener;
     }
 }

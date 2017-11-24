@@ -8,6 +8,7 @@ import com.chavrusa.im.bootstrap.launch.ServerLauncher;
 public class Bootstrap {
     public static void main(String[] args) throws Exception {
         ServerLauncher serverLauncher=new ServerLauncher();
+        serverLauncher.initListener();
         serverLauncher.startup();
 
     }

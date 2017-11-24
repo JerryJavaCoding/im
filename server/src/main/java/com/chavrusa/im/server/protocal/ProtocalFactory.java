@@ -22,7 +22,7 @@ public class ProtocalFactory {
         return ServerToolKits.parseToObj(byteBuf, Protocal.class);
     }
 
-    public static Protocal createLoginAck(String toHost) {
+    public static Protocal createLoginAck(String toHost,String loginResult) {
         Protocal protocal = new Protocal();
         try {
             protocal.setFromHost(InetAddress.getLocalHost().getHostAddress().toString());
@@ -32,9 +32,10 @@ public class ProtocalFactory {
         }
         protocal.setToHost(toHost);
         protocal.setType(ProtocalType.ACK.getValue());
-        protocal.setDataContent("login success");
+        protocal.setDataContent(loginResult);
         return protocal;
     }
+
     public static Builder builder(){
         return new Builder();
     }

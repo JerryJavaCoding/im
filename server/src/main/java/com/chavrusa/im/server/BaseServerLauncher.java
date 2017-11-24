@@ -1,5 +1,6 @@
 package com.chavrusa.im.server;
 
+import com.chavrusa.im.server.event.IMessageEventListener;
 import com.chavrusa.im.server.handler.ProtocalDecoder;
 import com.chavrusa.im.server.handler.ProtocalEncoder;
 import com.chavrusa.im.server.handler.ServerCoreHandler;
@@ -60,4 +61,7 @@ public abstract class BaseServerLauncher {
     }
 
     public abstract void initListener();
+    protected void addListener(IMessageEventListener messageEventListener){
+        serverCoreHandler.setMessageEventListener(messageEventListener);
+    }
 }

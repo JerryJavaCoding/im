@@ -8,6 +8,7 @@ import com.chavrusa.im.server.BaseServerLauncher;
 public class ServerLauncher extends BaseServerLauncher{
     @Override
     public void initListener() {
-
+        MessageEventListener messageEventListener=new MessageEventListener();
+        addListener(messageEventListener);
     }
 }
